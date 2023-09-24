@@ -157,9 +157,9 @@ def save_to_file(song_name, bpm, key):
 
 
 if __name__ == "__main__":
-    CLIENT_ID = 'fe6499ff20864d94a8d9daee54e078c1'
-    CLIENT_SECRET = 'f7289cd180a1426e868076c6615dc846'
-    SPOTIPY_REDIRECT_URI = 'http://127.0.0.1:8080/callback'
+    CLIENT_ID = 'YOUR CLIENT ID'
+    CLIENT_SECRET = 'YOUR SECRET CLIENT ID'
+    SPOTIPY_REDIRECT_URI = 'YOUR CALLBACK SERVER'
 
     auth_manager = SpotifyOAuth(
         client_id=CLIENT_ID,
