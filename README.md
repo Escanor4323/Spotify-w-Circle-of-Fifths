@@ -33,7 +33,6 @@ Before running the application, replace `'YOUR CLIENT ID'`, `'YOUR CLIENT SECRET
     ```bash
     python get_song_info.py
     ```
-
 2. You will be prompted with options to enter song data:
     - Enter `'file'` to read song data from a text file.
     - Enter `'input'` to manually input song data.
