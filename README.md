@@ -31,7 +31,7 @@ Before running the application, replace `'YOUR CLIENT ID'`, `'YOUR CLIENT SECRET
 
 1. Run the script with the command:
     ```bash
-    python script_name.py
+    python get_song_info.py
     ```
 
 2. You will be prompted with options to enter song data:
