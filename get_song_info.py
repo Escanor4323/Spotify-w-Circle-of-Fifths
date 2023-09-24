@@ -21,7 +21,6 @@ def sort_songs_by_custom_rules(songs):
                 return idx
         raise ValueError(f"{key} is not in the Circle of Fifths list.")
 
-    # Normalize keys in the songs data and group songs by key.
     songs_by_key = {}
     for song in songs:
         song['key'] = song['key'].replace('♯', '#').replace('♭', 'b')
@@ -37,16 +36,14 @@ def sort_songs_by_custom_rules(songs):
         if current_index in songs_by_key:
             current_key_songs = songs_by_key[current_index]
 
-            # Sort songs by BPM, alternate BPM order for each key group.
             if not bpm_switch:
                 current_key_songs = sorted(current_key_songs, key=lambda x: x['bpm'])
             else:
                 current_key_songs = sorted(current_key_songs, key=lambda x: x['bpm'], reverse=True)
 
-            # Add up to 4 songs from the current key group to the sorted_songs list.
             sorted_songs.extend(current_key_songs[:4])
 
-            bpm_switch = not bpm_switch  # Toggle the BPM order for the next key group.
+            bpm_switch = not bpm_switch
 
     return sorted_songs
 
@@ -58,30 +55,21 @@ def extract_songs_from_playlist(sp, playlist_link):
     original_playlist_name = original_playlist['name']
     original_playlist_image_url = original_playlist['images'][0]['url']
 
-    # Downloading the original playlist image
     response = requests.get(original_playlist_image_url)
     with open("original_playlist_image.jpg", "wb") as file:
         file.write(response.content)
 
-    # Extracting dominant color from the original playlist image
     color_thief = ColorThief("original_playlist_image.jpg")
     dominant_color = color_thief.get_color(quality=1)
 
-    # Creating a new image with the dominant color
     new_image = Image.new('RGB', (500, 500), dominant_color)
 
-    # Open the logo image
     logo = Image.open("logo.png")
 
-    # Calculate the position where the logo should be pasted.
-    # This example places the logo at the top left of the new image.
-    # Adjust the coordinates (0, 0) to place the logo at a different position.
     position = (0, 0)
 
-    # Paste the logo onto the new image at the specified position.
     new_image.paste(logo, position, logo)
 
-    # Save the new image with the logo.
     new_image.save("new_playlist_image.jpg")
 
     results = sp.playlist_tracks(playlist_id)
@@ -102,7 +90,6 @@ def extract_songs_from_playlist(sp, playlist_link):
     sorted_song_ids = [song['id'] for song in sorted_songs]
     sp.user_playlist_add_tracks(user_id, new_playlist['id'], sorted_song_ids)
 
-    # Uploading the new playlist image with exception handling
     try:
         with open("new_playlist_image.jpg", "rb") as file:
             base64_img = base64.b64encode(file.read()).decode('utf-8')
